@@ -9,6 +9,7 @@
         <th scope="col">#</th>
         <th scope="col">Tên blog</th>
         <th scope="col">Trình độ</th>
+        <th scope="col">mô tả</th>
         <th scope="col">Thời gian tạo</th>
         <th scope="col"></th>
       </tr>
@@ -19,16 +20,17 @@
         <th scope="row">{{sum @index 1}}</th>
         <td>{{this.name}}</td>
         <td>{{this.level}}</td>
-        <td>{{this.createdAt}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.deletedAt}}</td>
         <td>
-          <a href="" class="btn btn-link btn-restore">Khôi phục</a>
+          <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a>
           <a href="" class="btn btn-link" data-id="{{this._id}}" data-bs-toggle="modal"
             data-bs-target="#delete-blog-modal">Xóa vĩnh viễn</a>
         </td>
       </tr>
       {{else}}
       <tr>
-        <td colspan="5" class="text-center border border-0">Thùng rác trống <a href="me/stored/blogs">Danh sách khóa học</a></td>
+        <td colspan="5" class="text-center border border-0">Thùng rác trống <a href="/me/stored/blogs">Danh sách khóa học</a></td>
       </tr>
       {{/each}}
     </tbody>
@@ -55,10 +57,15 @@
 
 {{!-- Delete Form --}}
 <form name="delete-blog-form" method="POST" action=""></form>
+{{!-- Restore Form --}}
+<form name="restore-blog-form" method="POST" action=""></form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   var blogId;
   var deleteForm = document.forms['delete-blog-form']
+  var restoreBtn = $('.btn-restore')
+  var restoreForm = document.forms['restore-blog-form']
+    console.log(restoreBtn)
   $('#delete-blog-modal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     blogId = button.data('id');
@@ -67,8 +74,15 @@
   var btnDeleteBlog = document.getElementById('btn-delete-blog');
   if (btnDeleteBlog) {
     btnDeleteBlog.onclick = function () {
-      deleteForm.action = '/blogs/' + blogId + '?_method=DELETE'// blogId sẽ có giá trị nếu modal được mở đúng cách
+      deleteForm.action = '/blogs/' + blogId + '/force?_method=DELETE'// blogId sẽ có giá trị nếu modal được mở đúng cách
       deleteForm.submit()
     }
   }
+  // Restore btn clicked
+  restoreBtn.click(function(e) {
+    e.preventDefault()
+    var blogId = $(this).data('id')
+      restoreForm.action = '/blogs/' + blogId + '/restore?_method=PATCH'// blogId sẽ có giá trị nếu modal được mở đúng cách
+      restoreForm.submit()
+  })
 </script>

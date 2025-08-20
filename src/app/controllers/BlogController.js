@@ -6,7 +6,8 @@ class BlogController {
   // [GET] /blogs/:slug
   show(req, res, next) {
     Blog.findOne({ slug: req.params.slug }).then(blog => {
-      res.render('blogs/show', { blog: mongooseToObject(blog) })
+      // res.render('blogs/show', { blog: mongooseToObject(blog) })
+      res.json(mongooseToObject(blog));
     }).catch(next)
   }
   // [POST] /blogs/create
@@ -31,13 +32,25 @@ class BlogController {
       res.redirect('/me/stored/blogs');
     }).catch(next);
   }
+  // [PATCH] /blogs/:id/restore
+  restore(req, res, next) {
+    Blog.restore({ _id: req.params.id }).then(() => {
+      res.redirect('/me/trash/blogs');
+    }).catch(next);
+  }
+  // [DELETE] /blogs/:id/force
+  forceDelete(req, res, next) {
+    Blog.deleteOne({ _id: req.params.id }).then(() => {
+      res.redirect('/me/trash/blogs');
+    }).catch(next);
+  }
   // [POST] /blogs/store
   store(req, res, next) {
     const formData = req.body;
     const blog = new Blog(formData);
     console.log(blog);
     blog.save().then(() => {
-      res.redirect('/');
+      res.redirect('/me/stored/blogs');
     }).catch(error => { })
   }
 }

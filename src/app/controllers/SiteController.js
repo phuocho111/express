@@ -6,7 +6,8 @@ class SiteController {
   async index(req, res, next) {
     try {
       const blogs = await Blog.find({}); // Thêm .lean()
-      res.render('home', { blogs: multiplemongooseToObject(blogs) });
+      // res.render('home', { blogs: multiplemongooseToObject(blogs) });
+      res.json(multiplemongooseToObject(blogs)); // Trả về JSON thay vì render
     } catch (err) {
       next(err)
     }

@@ -1,10 +1,14 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
 const path = require('path');
+require('dotenv').config()
+const port = process.env.PORT || 3000;
+const hostName = process.env.HOST_NAME || 'localhost';
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const app = express();
-const port = 3000;
+console.log(process.env);
+
 
 const route = require('./routes');
 const db = require('./config/db');
@@ -21,6 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Override with POST having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method'))
+
+app.get('/middleware', (req, res, next) => {
+  console.log('Middleware is running');
+  next();
+});
 
 // HTTP loggerlogger
 app.use(morgan('combined'));
@@ -40,6 +49,6 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 // Routes init
 route(app);
 
-app.listen(port, () => {
+app.listen(port, hostName, () => {
   console.log(`App listening on port ${port}`);
 });

@@ -1,7 +1,7 @@
 <div class="mt-4">
   <div>
   <h3>Khóa học của tôi</h3>
-  <a href="/me/trash/blogs">Thùng rác</a>
+  <a href="/me/trash/blogs">Thùng rác ({{deletedCount}})</a>
   </div>
   <table class="table mt-4">
     <thead>
@@ -9,6 +9,7 @@
         <th scope="col">#</th>
         <th scope="col">Tên blog</th>
         <th scope="col">Trình độ</th>
+        <th scope="col">mô tả</th>
         <th scope="col">Thời gian tạo</th>
         <th scope="col"></th>
       </tr>
@@ -19,6 +20,7 @@
         <th scope="row">{{sum @index 1}}</th>
         <td>{{this.name}}</td>
         <td>{{this.level}}</td>
+        <td>{{this.description}}</td>
         <td>{{this.createdAt}}</td>
         <td>
           <a href="/blogs/{{this._id}}/edit" class="btn btn-link">Edit</a>

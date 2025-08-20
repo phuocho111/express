@@ -6,7 +6,9 @@ router.get('/create', blogController.create);
 router.post('/store', blogController.store);
 router.get('/:id/edit', blogController.edit);
 router.put('/:id', blogController.update);
+router.patch('/:id/restore', blogController.restore);
 router.delete('/:id', blogController.delete);
+router.delete('/:id/force', blogController.forceDelete);
 router.get('/:slug', blogController.show);
 
 module.exports = router;
