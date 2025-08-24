@@ -7,8 +7,7 @@ const hostName = process.env.HOST_NAME || 'localhost';
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const app = express();
-console.log(process.env);
-
+const errorHandle = require('./app/middleware/errorHandle');
 
 const route = require('./routes');
 const db = require('./config/db');
@@ -26,10 +25,8 @@ app.use(express.json());
 // Override with POST having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method'))
 
-app.get('/middleware', (req, res, next) => {
-  console.log('Middleware is running');
-  next();
-});
+// Custom middleware
+app.use(errorHandle);
 
 // HTTP loggerlogger
 app.use(morgan('combined'));
