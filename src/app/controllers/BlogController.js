@@ -1,85 +1,83 @@
-const Blog = require('../models/Blog');
-const { mongooseToObject } = require('../../util/mongoose');
-const { multiplemongooseToObject } = require('../../util/mongoose');
+const Blog = require("../models/Blog");
+const { mongooseToObject } = require("../../util/mongoose");
+const { multiplemongooseToObject } = require("../../util/mongoose");
 
 class BlogController {
   // [GET] /blogs
-  async list(req, res, next) {
+  list(req, res, next) {
     try {
-      const blogs = await Blog.find({}); // Thêm .lean()
-      res.render('home', { blogs: multiplemongooseToObject(blogs) });
+      Blog.find({}).then((blog) => {
+        res.render("home", { blogs: multiplemongooseToObject(blog) });
+      }); // Thêm .lean()
       // res.json(multiplemongooseToObject(blogs)); // Trả về JSON thay vì render
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
   // [GET] /blogs/:slug
   detail(req, res, next) {
     try {
-      Blog.findOne({ slug: req.params.slug }).then(blog => {
-        res.render('blogs/show', { blog: mongooseToObject(blog) })
+      Blog.findOne({ slug: req.params.slug }).then((blog) => {
+        res.render("blogs/show", { blog: mongooseToObject(blog) });
         // res.json(mongooseToObject(blog));
-      })
+      });
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
   // [POST] /blogs/create
   create(req, res, next) {
-    res.render('blogs/create');
+    res.render("blogs/create");
   }
   // [GET] /blogs/:id/edit
-  async edit(req, res, next) {
+  edit(req, res, next) {
     try {
-      const blogDetail = Blog.findById(req.params.id)
-      console.log(blogDetail);
-      if (!blogDetail) {
-        res.status(404)
-        throw new Error('Blog not found')
-      }
-      // await res.render('blogs/edit', { blog: mongooseToObject(blogDetail) })
+      Blog.findById(req.params.id).then((blog) => {
+        res.render("blogs/edit", { blog: mongooseToObject(blog) });
+        // res.json(mongooseToObject(blog));
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   // [PUT] /blogs/:id
-  async update(req, res, next) {
+  update(req, res, next) {
     try {
       Blog.updateOne({ _id: req.params.id }, req.body).then((blog) => {
-        res.redirect('/me/stored/blogs');
-      })
+        res.redirect("/me/stored/blogs");
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   // [DELETE] /blogs/:id
-  async delete(req, res, next) {
+  delete(req, res, next) {
     try {
       Blog.delete({ _id: req.params.id }).then(() => {
-        res.redirect('/me/stored/blogs');
-      })
+        res.redirect("/me/stored/blogs");
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   // [PATCH] /blogs/:id/restore
-  async restore(req, res, next) {
+  restore(req, res, next) {
     try {
       Blog.restore({ _id: req.params.id }).then(() => {
-        res.redirect('/me/trash/blogs');
-      })
+        res.redirect("/me/trash/blogs");
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   // [DELETE] /blogs/:id/force
   forceDelete(req, res, next) {
     try {
       Blog.deleteOne({ _id: req.params.id }).then(() => {
-        res.redirect('/me/trash/blogs');
-      })
+        res.redirect("/me/trash/blogs");
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   // [POST] /blogs/store
@@ -87,15 +85,15 @@ class BlogController {
     const formData = req.body;
     const blog = new Blog(formData);
     if (!formData.name || !formData.description || !formData.level) {
-      res.status(404)
-      throw new Error('All fields are required!');
+      res.status(404);
+      throw new Error("All fields are required!");
     }
     try {
       blog.save().then(() => {
-        res.redirect('/me/stored/blogs');
-      })
+        res.redirect("/me/stored/blogs");
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }

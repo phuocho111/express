@@ -3,7 +3,13 @@
   <form class="mt-4" method="POST" action="/blogs/{{blog._id}}?_method=PUT">
     <div class="mb-3">
       <label for="search-input" class="form-label">Blog name</label>
-      <input type="text" name="name" value="{{blog.name}}" class="form-control" id="name" />
+      <input
+        type="text"
+        name="name"
+        value="{{blog.name}}"
+        class="form-control"
+        id="name"
+      />
     </div>
     <div class="mb-3">
       <label for="search-input" class="form-label">Mô tả Blog</label>
@@ -16,7 +22,13 @@
     </div>
     <div class="mb-3">
       <label for="search-input" class="form-label">Blog Level</label>
-      <input type="text" name="level" value="{{blog.level}}" class="form-control" id="level" />
+      <input
+        type="text"
+        name="level"
+        value="{{blog.level}}"
+        class="form-control"
+        id="level"
+      />
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
   </form>
