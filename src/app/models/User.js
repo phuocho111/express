@@ -4,11 +4,6 @@ const autoIncrement = require("mongoose-sequence")(mongoose);
 const User = new Schema(
   {
     _id: { type: Number },
-    user_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      require: true,
-      ref: "User",
-    },
     username: {
       type: String,
       maxLength: 255,

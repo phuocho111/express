@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const blogController = require("../app/controllers/BlogController");
+const validateToken = require("../app/middlewares/validateToken");
+
+router.use(validateToken);
 
 router.get("/", blogController.list);
 router.get("/create", blogController.create);
