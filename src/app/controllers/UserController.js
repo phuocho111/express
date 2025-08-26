@@ -73,7 +73,7 @@ class UserController {
     }
   }
   // [GET] /current
-  async current(req, res, next) {
+  async profile(req, res, next) {
     try {
       res.json(req.user);
     } catch (err) {

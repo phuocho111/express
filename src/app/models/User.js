@@ -20,6 +20,9 @@ const User = new Schema(
       maxLength: 255,
       required: [true, "please add the user password"],
     },
+    token: {
+      type: String,
+    },
   },
   {
     timestamps: true,
