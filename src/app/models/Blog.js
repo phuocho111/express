@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
 const mongooseDelete = require("mongoose-delete");
 const Schema = mongoose.Schema;
-// const autoIncrement = require("mongoose-sequence")(mongoose);
+const autoIncrement = require("mongoose-sequence")(mongoose);
 const Blog = new Schema(
   {
     user_id: {
@@ -10,6 +10,7 @@ const Blog = new Schema(
       require: true,
       ref: "User",
     },
+    blogId: { type: Number },
     name: { type: String, maxLength: 255, required: true },
     description: { type: String },
     image: { type: String },
@@ -22,7 +23,7 @@ const Blog = new Schema(
 );
 // Add plugins to the schema
 mongoose.plugin(slug);
-// Blog.plugin(autoIncrement, { inc_field: "_id" });
+Blog.plugin(autoIncrement, { inc_field: "blogId" });
 Blog.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
 
 module.exports = mongoose.model("Blog", Blog);

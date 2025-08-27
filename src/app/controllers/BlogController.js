@@ -6,7 +6,8 @@ class BlogController {
   // [GET] /blogs
   async list(req, res, next) {
     try {
-      const blogs = await Blog.find({ user_id: req.user.id });
+      // const blogs = await Blog.find({ user_id: req.user.id });
+      const blogs = await Blog.find();
       // res.render("home", { blogs: multiplemongooseToObject(blogs) });
       res.json(multiplemongooseToObject(blogs));
     } catch (err) {
