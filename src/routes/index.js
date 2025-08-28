@@ -5,11 +5,11 @@ const blogRouter = require("./blogs");
 const userRouter = require("./users");
 
 function route(app) {
-  app.use("/news", newsRouter);
-  app.use("/me", meRouter);
-  app.use("/about", aboutRouter);
-  app.use("/blogs", blogRouter);
-  app.use("/api/v1/users", userRouter);
+  app.use("/api/News", newsRouter);
+  app.use("/api/Me", meRouter);
+  app.use("/api/About", aboutRouter);
+  app.use("/api/Blogs", blogRouter);
+  app.use("/api/Users", userRouter);
 }
 
 module.exports = route;

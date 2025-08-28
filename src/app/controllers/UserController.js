@@ -8,12 +8,30 @@ class UserController {
   // [POST] /register create user
   async register(req, res, next) {
     try {
-      const { username, email, password } = req.body;
-      if (!username || !email || !password) {
+      const {
+        username,
+        email,
+        password,
+        confirmPassword,
+        fullName,
+        dateOfBirth,
+        avatarImageUrl,
+      } = req.body;
+      if (
+        !username ||
+        !email ||
+        !password ||
+        !confirmPassword ||
+        !fullName ||
+        !dateOfBirth ||
+        !avatarImageUrl
+      ) {
         res.status(400);
         throw new Error("All fields are mandatory!");
       }
-      const userAvailable = await User.findOne({ email });
+      console.log(111);
+
+      const userAvailable = await User.findOne({ username });
       if (userAvailable) {
         res.status(400);
         throw new Error("User already registered!");
@@ -25,6 +43,9 @@ class UserController {
         username,
         email,
         password: hashedPassword,
+        fullName,
+        dateOfBirth,
+        avatarImageUrl,
       });
       if (user) {
         // res.status(201).json({ _id: user.id, email: user.email });
@@ -40,13 +61,13 @@ class UserController {
   // [POST] /login accessToken
   async login(req, res, next) {
     try {
-      const { email, password } = req.body;
-      if (!email || !password) {
+      const { username, password } = req.body;
+      if (!username || !password) {
         res.status(400);
         throw new Error("All fields are mandatory!");
       }
       const user = await User.findOne({
-        email,
+        username,
       });
       // Compare password with hashed password
       if (user && (await bcrypt.compare(password, user.password))) {
@@ -61,7 +82,10 @@ class UserController {
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "15m" }
         );
-        res.status(200).json({ accessToken });
+        res.status(200).json({
+          token: accessToken,
+          userId: user.id,
+        });
       } else {
         res.status(401);
         throw new Error("Email or password is not valid");
