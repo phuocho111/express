@@ -20,8 +20,20 @@ const User = new Schema(
       maxLength: 255,
       required: [true, "please add the user password"],
     },
-    token: {
+    fullName: {
       type: String,
+      maxLength: 255,
+      required: [true, "please add the user fullName"],
+    },
+    dateOfBirth: {
+      type: String,
+      maxLength: 255,
+      required: [true, "please add the user date of birth"],
+    },
+    avatarImageUrl: {
+      type: String,
+      maxLength: 255,
+      required: [true, "please add the user date of birth"],
     },
   },
   {
