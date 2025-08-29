@@ -20,11 +20,6 @@ const User = new Schema(
       maxLength: 255,
       required: [true, "please add the user password"],
     },
-    confirmPassword: {
-      type: String,
-      maxLength: 255,
-      required: [true, "please add the user confirm password"],
-    },
     fullName: {
       type: String,
       maxLength: 255,

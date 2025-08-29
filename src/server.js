@@ -1,5 +1,4 @@
 const express = require("express");
-const { engine } = require("express-handlebars");
 const path = require("path");
 require("dotenv").config();
 const port = process.env.PORT || 3000;
@@ -31,7 +30,8 @@ db.connect();
 
 // Action ---> Dispatcher ---> Function handler
 
-app.use(express.static(path.join(__dirname, "public")));
+// Cho phép public thư mục images ra ngoài
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -45,18 +45,6 @@ app.use(errorHandle);
 // HTTP loggerlogger
 app.use(morgan("combined"));
 
-// Template enginewwwwwwwwww
-app.engine(
-  "hbs",
-  engine({
-    extname: ".hbs",
-    helpers: {
-      sum: (a, b) => a + b,
-    },
-  })
-);
-app.set("view engine", "hbs");
-app.set("views", path.join(__dirname, "resources", "views"));
 // Routes init
 route(app);
 

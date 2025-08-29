@@ -6,7 +6,6 @@
   "scripts": {
     "beautiful": "lint-staged",
     "start": "nodemon --inspect src/server.js",
-    "watch": "node-sass --watch src/resources/scss/app.scss src/public/css/app.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,13 +14,13 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "express-handlebars": "^8.0.3",
     "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.15.2",
     "mongoose-delete": "^1.0.2",
     "mongoose-sequence": "^6.0.1",
-    "mongoose-slug-generator": "^1.0.4"
+    "mongoose-slug-generator": "^1.0.4",
+    "multer": "^2.0.2"
   },
   "lint-staged": {
     "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
