@@ -82,7 +82,7 @@ class UserController {
             },
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "15m" }
+          { expiresIn: "30d" }
         );
         res.status(200).json({
           token: accessToken,

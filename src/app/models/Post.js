@@ -22,10 +22,10 @@ const Post = new Schema(
       required: [true, "please add the post image"],
     },
     categories: {
-      type: Array,
+      type: [String],
       required: [true, "please add the post categories"],
     },
-    slug: { type: String, unique: true, index: true },
+    slug: { type: String, slug: "title" },
   },
   {
     timestamps: true,

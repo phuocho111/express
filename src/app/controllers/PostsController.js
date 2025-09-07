@@ -35,11 +35,13 @@ class NewsController {
 
   // [GET] /Post Detail
   async PostDetail(req, res, next) {
-    console.log(req.params.slug);
     try {
       const postItem = await Post.findOne({
         slug: formatSlug(req.params.slug),
-      }).exec();
+      });
+      if (!postItem) {
+        res.status(404).json({ status: 404, message: "Post not found!" })
+      }
       res.json(mongooseToObject(postItem));
     } catch (err) {
       next(err);
@@ -64,6 +66,10 @@ class NewsController {
       });
 
       res.status(201).json(newPost);
+      res.status(201).json({
+        message: "Post created successfully",
+        post: newPost
+      });
     } catch (error) {
       next(error);
     }
